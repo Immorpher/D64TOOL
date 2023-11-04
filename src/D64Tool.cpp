@@ -410,8 +410,7 @@ void ConvertSectors(int lump)
     short light2 = 0;
     short special = 0;
     short tag = 0;
-    unsigned char flags = 0;//flag
-    unsigned char vol = 0;//flag
+    short flags = 0;
 
     /*unsigned short color1;
     unsigned short color2;
@@ -494,42 +493,6 @@ void ConvertSectors(int lump)
     offcnt+=olen;
 }
 
-void ConvertVertexes(int lump)
-{
-    PrintfPorcentaje(lump, numlumps - 1, true, getcoord.Y, "Convirtiendo Mapa Formato Doom 64 EX a Doom 64 N64...\t", lump);
-          
-    int size = 0;
-    short x = 0;
-    short y = 0;
-    int X = 0;
-    int Y = 0;
-	 
-    int numvertex = 0;
-    fseek(mapin,lumpinfo[lump].filepos,SEEK_SET);
-
-    //setnew filepos
-    lumpinfo[lump].filepos = offcnt;
-    numvertex = lumpinfo[lump].size/4;
-     
-    for(int i = 0; i <numvertex; i++)
-    {
-        fread (&x,sizeof(short),1,mapin);
-        fread (&y,sizeof(short),1,mapin);
-            
-        X = x << 16;
-        Y = y << 16;
-	        
-        fwrite (&X,sizeof(unsigned int), 1 ,mapout);
-        fwrite (&Y,sizeof(unsigned int), 1 ,mapout);
-        size += 8;
-    }
-     
-    lumpinfo[lump].size = size;
-     
-    offcnt+=size;
-}
-
-
 void Read_MapWad(char *name)
 {
     int i;
@@ -594,7 +557,7 @@ void info()
     setcolor(0x07);printf("#########################\n");
     printf("     #                       D64 TOOL                         #\n");
     printf("     #             CREADO POR ERICK VASQUEZ GARCIA            #\n");
-    printf("     #                   VERSION 1.0 (2023)                   #\n");
+    printf("     #                   VERSION 1.1 (2023)                   #\n");
     printf("     #                                                        #\n");
     printf("     # MODO DE USO:                                           #\n");
     printf("     # (-D64_EX_TO_N64) Convierte Mapa Doom64 EX a Doom64 N64 #\n");
